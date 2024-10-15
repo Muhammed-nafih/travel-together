@@ -1,0 +1,54 @@
+{% extends 'Base.html'%}
+{% block content%}
+{% if messages %}
+
+{% for message in messages %}
+{% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+{% endfor %}
+
+{% endif %}
+{%load static%}
+<div style="background-image:  url('/media/bg1.jpg'); background-repeat:no-repeat;background-size:cover;  height:650px; width:100%;">
+
+
+    <h1>View Request</h1>
+
+
+    <div class="container">
+        <table class="table table-warning table-hover table-stripped">
+            <thead>
+                <th>ID</th>
+                <th>user</th>
+                <th>group</th>
+                <th>status</th>
+                <th>Update Status</th>
+            </thead>
+
+            <tbody>
+                {%for i in details%}
+                <form method="POST" action="/Update_Status/" enctype="multipart/form-data">
+                     {% csrf_token %}
+                    <tr>
+                        <td>{{i.id}} <input hidden type="text" value="{{i.id}}" name="req_id"> </td>
+                        <td>{{i.user.id}} <input hidden type="text" value="{{i.user.id}} " name="user_id"> </td>
+                        <td>{{i.group.id}} <input hidden type="text" value="{{i.group.id}}" name="group_id"></td>
+                        <td>{{i.status}}</td>
+                        <td>
+                            <select name="status" class="form-select">
+                                <option value="Approved">Approved</option>
+                                <option value="Rejected">Rejected</option>
+                                <option value="Blocked">Blocked</option>
+                            </select>
+                            <input type="submit" name="" class="btn btn-secondary" >
+                        </td>
+                    </tr>
+                </form>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+
+    
+</div>
+{% endblock %}
