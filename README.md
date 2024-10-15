@@ -1,1 +1,4 @@
 # travel-together
+
+Travel Buddy is a travel together website that aims to connect like-minded travelers and provide them with a platform to plan, coordinate, and embark on memorable journeys together. The website serves as a social network and travel planning tool, offering a range of features and functionalities to enhance the travel experience for its users.
+The core objective of Travel Buddy is to enable individuals who share similar travel interests, destinations, and preferences to connect and form travel groups or find travel companions. Users can create profiles, including their travel preferences, destinations they wish to visit, and the type of travel experiences they are seeking. They can then search for other users with compatible travel interests and connect with them to discuss potential travel plans This system uses HTML ,CSS and Javascript as front end and the back end used for this are python and framework is django and mysql for database.
