@@ -8,7 +8,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-local-dev-secret')
 DEBUG = os.getenv('DJANGO_DEBUG', '') == 'True'
 
-# Host configuration: allow localhost in dev and render domain in prod
+# Host configuration: allow localhost in dev and Render domain in prod
+# If DJANGO_ALLOWED_HOSTS is set, use it; otherwise use default list
 default_hosts = ['127.0.0.1', 'localhost', 'travel-together.onrender.com']
 env_hosts = os.getenv('DJANGO_ALLOWED_HOSTS', '')
 ALLOWED_HOSTS = env_hosts.split(',') if env_hosts else default_hosts
@@ -58,7 +59,6 @@ WSGI_APPLICATION = 'TravelTogether.wsgi.application'
 
 # DATABASE CONFIGURATION
 if DEBUG:
-    # Local MySQL (XAMPP)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -70,7 +70,6 @@ if DEBUG:
         }
     }
 else:
-    # Production: use DATABASE_URL
     DATABASES = {
         'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
     }
@@ -83,9 +82,7 @@ USE_TZ = True
 
 # Static & Media
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'Travel_App' / 'static'
-]
+STATICFILES_DIRS = [BASE_DIR / 'Travel_App' / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
