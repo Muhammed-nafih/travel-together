@@ -7,8 +7,9 @@ from .import views
 urlpatterns = [
 				
 				path('',views.Home,name='Home'),
-				path('Registration/',views.Registration,name='Registration'),
-				path('User_Login/',views.User_Login,name='User_Login'),
+	path('Registration/', views.Registration, name='Registration'),
+	path('User_Login/', views.User_Login, name='User_Login'),
+    path("Logout/",    views.Logout,    name="Logout"),
 				path('Profile/',views.Profile,name='Profile'),
 				path('ChangePassword/',views.ChangePassword,name='ChangePassword'),
 				path('Manage_Groups/',views.Manage_Groups,name='Manage_Groups'),

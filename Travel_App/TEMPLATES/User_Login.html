@@ -1,92 +1,55 @@
-{% extends 'Base.html'%}
-{% block content%}
-{% if messages %}
+{# Travel_App/templates/User_Login.html #}
+{% extends 'Base.html' %}
+{% load static %}
 
-{% for message in messages %}
-{% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+{% block content %}
+  {% if messages %}
+    {% for message in messages %}
+      <script>alert("{{ message }}")</script>
+    {% endfor %}
+  {% endif %}
 
-{% endfor %}
-
-{% endif %}
-{%load static%}
-<style>
-        .box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 50px;
-}
-
-.box > div { /*The > denotes only the first or immediate child will be affected*/
-  width: 500px;
-  height: auto;
-  /*border: dotted;
-*/
-  background-color: #CFE3E2;
-  border-radius: 5px
-}
-
-.box > div label{
-    color: white;
-}
-
-#hov {
-  box-shadow: inset 0 0 0 0 #54b3d6;
-  color: #54b3d6;
-  margin: 0 -.25rem;
-  padding: 0 .25rem;
-  transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
-}
-#hov:hover {
-  box-shadow: inset 200px 0 0 0 #54b3d6;
-  color: white;
-}
-
-
-</style>
-
-<div style="background-image:  url('/media/.jpg'); background-repeat:no-repeat;background-size:cover;  height:650px; width:100%;">
-    <div class="box">
-        <div class="shadow-lg p-3 mb-5 ">
-             <h3 >User Login</h3> 
-             <hr>
-            <form method="POST" action="/User_Login/" enctype="multipart/form-data" style="padding:25px;">
-                {% csrf_token %}
-              <div class="row">
-                  <div class="col-md-12">
-                    <label style="color:black;" for="validationCustomUsername" class="form-label">Username</label>
-                        <div class="input-group has-validation">
-                          <span class="input-group-text material-symbols-outlined" id="inputGroupPrepend">person</span>
-                          <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" name="aname" required>
-                          <div class="invalid-feedback">
-                            Please choose a username.
-                          </div>
-                        </div>
-                  </div>
-                  <div class="col-md-12">
-                    <label style="color:black;" for="validationCustomUsername" class="form-label">Password</label>
-                        <div class="input-group has-validation">
-                          <span class="input-group-text material-symbols-outlined" id="inputGroupPrepend">password</span>
-                          <input type="password" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" name="apass" required>
-                          
-                        </div>
-                  </div>
-              </div>
-              <br>
-              <div class="row">
-                  <div class="col-md-12" style="display: flex;justify-content: center;">
-                      <input class="btn btn-secondary" type="submit" name="submit">
-                  </div>
-              </div>
-              <br>
-              <div class="row">
-                  <div class="col-md-12 " style="display: flex;justify-content: center;">
-                      <a id="hov" style="color:black;" href="/Registration/" >New User Registeration</a>
-                  </div>
-              </div>
-              <br>
-            </form>
+  <div class="hero-banner d-flex align-items-center justify-content-center">
+    <div class="box shadow-lg p-4 rounded">
+      <h3 class="text-center mb-3">User Login</h3>
+      <form method="POST" action="{% url 'User_Login' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <div class="input-group">
+            <span class="input-group-text material-symbols-outlined">person</span>
+            <input type="text" class="form-control" id="username" name="aname" required>
+          </div>
         </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <span class="input-group-text material-symbols-outlined">password</span>
+            <input type="password" class="form-control" id="password" name="apass" required>
+          </div>
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-secondary" type="submit">Login</button>
+        </div>
+        <div class="text-center mt-3">
+          <a class="btn btn-link" href="{% url 'Registration' %}">New User Registration</a>
+        </div>
+      </form>
     </div>
-</div>
+  </div>
+
+  <style>
+    .hero-banner {
+      background-image: url("{% static 'image/banner-03.jpg' %}");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 100vh;
+    }
+    .box {
+      width: 320px;
+      background-color: rgba(255,255,255,0.85);
+    }
+  </style>
 {% endblock %}

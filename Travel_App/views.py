@@ -6,8 +6,13 @@ from django.contrib.sessions.models import Session
 from django.db import connection
 
 
+
 def Home(request):
-	return render(request,"Home.html",{})
+    # if they’re not marked as logged in, send them to the login page
+    if request.session.get('login') != "Yes":
+        return redirect('User_Login')   # use the URL name for your login view
+    # otherwise render the normal home page
+    return render(request, "Home.html", {})
 
 def Registration(request):
 	if request.method == "POST":
@@ -55,6 +60,14 @@ def User_Login(request):
 			return redirect("/User_Login")
 	else:
 		return render(request,'User_Login.html',{})
+	
+
+def Logout(request):
+    # clear everything
+    request.session.flush()
+    messages.info(request, "Logged out")
+    return redirect('User_Login')	
+	
 
 def Profile(request):
 	user_id = request.session['UserId']
