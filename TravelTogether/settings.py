@@ -19,7 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Travel_App',
+    'travel_app',
 ]
 
 MIDDLEWARE = [
@@ -36,9 +36,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'TravelTogether.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+    {'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [ BASE_DIR / 'travel_app' / 'templates' ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
