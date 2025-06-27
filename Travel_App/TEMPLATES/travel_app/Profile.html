@@ -1,0 +1,107 @@
+{% extends 'Base.html'%}
+{% block content%}
+{% if messages %}
+
+{% for message in messages %}
+{% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+{% endfor %}
+
+{% endif %}
+{%load static%}
+<div style="background-image:  url('/media/bg1.jpg'); background-repeat:no-repeat;background-size:cover;  height:650px; width:100%;">
+
+     <style>
+    .error {
+      color: red;
+    }
+
+        .box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+.box > div { /*The > denotes only the first or immediate child will be affected*/
+  width: 700px;
+  height: auto;
+  /*border: dotted;
+*/
+  background-color: #CFE3E2;
+  border-radius: 5px
+}
+  </style>
+
+
+    
+
+
+    <div class="box">
+        <div class="shadow-lg p-3 mb-5 ">
+             <h1>Profile</h1>
+             <hr>
+             <form id="registrationForm" method="POST" action="" enctype="multipart/">
+    {% csrf_token %} 
+    {%for i in details%}
+    <div class="row">
+        <div class="mb-3 col-md-6">
+        <label class="form-label">User ID</label>
+        <input class="form-control" type="text" name="userid" value="{{i.id}}" readonly>
+    </div>
+
+    <div class="mb-3 col-md-6">
+        <div class="row"><label class="form-label">Profile Photo</label></div>
+        {%if i.Image != Null%}
+        <div class="row">
+            <img src="{{i.Image.url}}"  width="50px">
+        </div>
+        {%else%}
+        <div>
+            <label>No Profile Photo</label>
+        </div>
+        {%endif%}
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="mb-3 col-md-6">
+      <label class="form-label" for="name">Name:</label>
+      <input class="form-control" name="name" type="text" id="name" pattern="[A-Za-z ]+" value="{{i.Name}}" required>
+      <span id="nameError" class="error"></span>
+    </div>
+    <div class="mb-3 col-md-6">
+      <label class="form-label" for="age">Age:</label>
+      <input class="form-control" name="age" type="number" id="age" min="1" value="{{i.Age}}" required>
+      <span id="ageError" class="error"></span>
+    </div>
+    </div>
+
+
+    <div>
+      <label class="form-label" for="address">Address:</label>
+      <input class="form-control" name="address" type="text" id="address" value="{{i.Address}}" required>
+      <span id="addressError" class="error"></span>
+    </div>
+    
+    <div class="row">
+        <div class="mb-3 col-md-6">
+      <label class="form-label" for="phone">Phone Number:</label>
+      <input class="form-control" name="phone" type="tel" id="phone" pattern="[0-9]{10}" value="{{i.Phone}}" required>
+      <span id="phoneError" class="error"></span>
+    </div>
+    <div class="mb-3 col-md-6">
+      <label class="form-label" for="email">Email Address:</label>
+      <input class="form-control" name="email" type="email" id="email" value="{{i.Email}}" required>
+      <span id="emailError" class="error"></span>
+    </div>
+    </div>
+    {%endfor%}
+  </form>
+        </div>
+    </div>
+
+  
+   
+</div>
+{% endblock %}

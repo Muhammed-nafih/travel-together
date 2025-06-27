@@ -1,0 +1,74 @@
+{% extends 'Base.html'%}
+{% block content%}
+{% if messages %}
+
+{% for message in messages %}
+{% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+{% endfor %}
+
+{% endif %}
+{%load static%}
+<div style="background-image:  url('/media/bg1.jpg'); background-repeat:no-repeat;background-size:cover;  height:650px; width:100%;">
+
+
+    <h1>View Groups</h1>
+
+    <div class="container" style="padding-top: 20px;">
+            <table class="table table-warning table-hover table-stripped">
+                <thead>
+                    <th>ID</th>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th colspan="2">Action</th>
+                </thead>
+
+                <tbody>
+                   {% for data in group_data %}
+    {% with group=data.group join_request=data.join_request %}
+        <tr>
+            <td>{{ group.id }}</td>
+            <td>{{ group.user_id }}</td>
+            <td>{{ group.Name }}</td>
+            <td>
+                <img src="{{ group.Image.url }}" width="100px">
+            </td>
+            <td>{{ group.Description }}</td>
+            <td>{{ group.Status }}</td>
+            <td>
+                {% if group.Status == 'Public' %}
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <a style="width: 100%;" class="btn btn-warning" href="/View_Chat/{{ group.id }}">View Chat</a>
+                        </div>
+                    </div>
+                {% elif join_request %}
+                    {% if join_request.status == 'Approved' %}
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <a style="width: 100%;" class="btn btn-danger" href="/View_Members/{{ group.id }}">View Members</a>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <a style="width: 100%;" class="btn btn-warning" href="/View_Chat/{{ group.id }}">View Chat</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p>{{ join_request.status }}</p>
+                    {% endif %}
+                {% else %}
+                    <a style="width: 100%;" class="btn btn-danger" href="/Join/{{ group.id }}">Join</a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endwith %}
+{% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    
+</div>
+{% endblock %}

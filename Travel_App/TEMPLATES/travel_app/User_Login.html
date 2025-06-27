@@ -1,0 +1,55 @@
+{# Travel_App/templates/User_Login.html #}
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block content %}
+  {% if messages %}
+    {% for message in messages %}
+      <script>alert("{{ message }}")</script>
+    {% endfor %}
+  {% endif %}
+
+  <div class="hero-banner d-flex align-items-center justify-content-center">
+    <div class="box shadow-lg p-4 rounded">
+      <h3 class="text-center mb-3">User Login</h3>
+      <form method="POST" action="{% url 'User_Login' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <div class="input-group">
+            <span class="input-group-text material-symbols-outlined">person</span>
+            <input type="text" class="form-control" id="username" name="aname" required>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <span class="input-group-text material-symbols-outlined">password</span>
+            <input type="password" class="form-control" id="password" name="apass" required>
+          </div>
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-secondary" type="submit">Login</button>
+        </div>
+        <div class="text-center mt-3">
+          <a class="btn btn-link" href="{% url 'Registration' %}">New User Registration</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <style>
+    .hero-banner {
+      background-image: url("{% static 'image/banner-03.jpg' %}");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 100vh;
+    }
+    .box {
+      width: 320px;
+      background-color: rgba(255,255,255,0.85);
+    }
+  </style>
+{% endblock %}
