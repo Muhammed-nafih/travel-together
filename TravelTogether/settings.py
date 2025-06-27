@@ -1,20 +1,24 @@
-from pathlib import Path
-import os
-import dj_database_url
+# your_project/settings.py
 
+import os
+from pathlib import Path
+import environ
+
+# ─── BASE DIR ────────────────────────────────────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-local-dev-secret')
-DEBUG = os.getenv('DJANGO_DEBUG', '') == 'True'
+# ─── ENVIRONMENT VARIABLES ───────────────────────────────────────────────────
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+# read .env file at project root
+environ.Env.read_env(env_file=str(BASE_DIR / '.env'))
 
-# Host configuration: allow localhost in dev and Render domain in prod
-# If DJANGO_ALLOWED_HOSTS is set, use it; otherwise use default list
-default_hosts = ['127.0.0.1', 'localhost', 'travel-together.onrender.com']
-env_hosts = os.getenv('DJANGO_ALLOWED_HOSTS', '')
-ALLOWED_HOSTS = env_hosts.split(',') if env_hosts else default_hosts
+SECRET_KEY       = env('SECRET_KEY')
+DEBUG            = env('DEBUG')
+ALLOWED_HOSTS    = env.list('ALLOWED_HOSTS', default=[])
 
-# INSTALLED APPS
+# ─── INSTALLED APPS ─────────────────────────────────────────────────────────
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -25,10 +29,10 @@ INSTALLED_APPS = [
     'Travel_App',
 ]
 
-# MIDDLEWARE
+# ─── MIDDLEWARE ──────────────────────────────────────────────────────────────
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',        # <— add Whitenoise here
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -37,12 +41,21 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'TravelTogether.urls'
+# ─── URL / WSGI ──────────────────────────────────────────────────────────────
+ROOT_URLCONF  = 'TravelTogether.urls'
+WSGI_APPLICATION = 'TravelTogether.wsgi.application'
 
+# ─── DATABASE ────────────────────────────────────────────────────────────────
+# expects DATABASE_URL=mysql://user:pass@host:port/name
+DATABASES = {
+    'default': env.db()
+}
+
+# ─── TEMPLATES ───────────────────────────────────────────────────────────────
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [],    # or [BASE_DIR / 'templates'] if you have a top-level templates dir
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -55,38 +68,21 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'TravelTogether.wsgi.application'
-
-# DATABASE CONFIGURATION
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'travel_db',
-            'USER': 'root',
-            'PASSWORD': '',
-            'HOST': '127.0.0.1',
-            'PORT': '3306',
-        }
-    }
-else:
-    DATABASES = {
-        'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
-    }
-
-# Internationalization
+# ─── INTERNATIONALIZATION ────────────────────────────────────────────────────
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
+TIME_ZONE     = 'UTC'
+USE_I18N      = True
+USE_TZ        = True
 
-# Static & Media
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'Travel_App' / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# ─── STATIC FILES (CSS, JS, IMAGES) ─────────────────────────────────────────
+STATIC_URL           = '/static/'
+STATIC_ROOT          = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS     = [ BASE_DIR / 'Travel_App' / 'static' ]
+STATICFILES_STORAGE  = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# ─── MEDIA UPLOADS ───────────────────────────────────────────────────────────
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# ─── DEFAULT PK FIELD TYPE ──────────────────────────────────────────────────
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
