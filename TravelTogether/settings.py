@@ -4,13 +4,9 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)^qahg-vk9x_lbuin9r_ms&3_=3+-o#3)=bpn$vw7zx5hkw=4c'
-
-# SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = '…'
 DEBUG = True
-
-ALLOWED_HOSTS = ['.onrender.com']
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -19,7 +15,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'travel_app',
+    'Travel_App',
 ]
 
 MIDDLEWARE = [
@@ -36,8 +32,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'TravelTogether.urls'
 
 TEMPLATES = [
-    {'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'travel_app' / 'templates' ],
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -56,7 +53,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'travel_db',
         'USER': 'root',
-        'HOST': 'localhost',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
