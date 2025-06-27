@@ -1,24 +1,13 @@
-# your_project/settings.py
-
-import os
+# your_project/your_project/settings.py
 from pathlib import Path
-import environ
+import os
 
-# ─── BASE DIR ────────────────────────────────────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ─── ENVIRONMENT VARIABLES ───────────────────────────────────────────────────
-env = environ.Env(
-    DEBUG=(bool, False)
-)
-# read .env file at project root
-environ.Env.read_env(env_file=str(BASE_DIR / '.env'))
+SECRET_KEY = '…'
+DEBUG = True
+ALLOWED_HOSTS = []
 
-SECRET_KEY       = env('SECRET_KEY')
-DEBUG            = env('DEBUG')
-ALLOWED_HOSTS    = env.list('ALLOWED_HOSTS', default=[])
-
-# ─── INSTALLED APPS ─────────────────────────────────────────────────────────
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -29,10 +18,8 @@ INSTALLED_APPS = [
     'Travel_App',
 ]
 
-# ─── MIDDLEWARE ──────────────────────────────────────────────────────────────
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',        # <— add Whitenoise here
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -41,21 +28,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ─── URL / WSGI ──────────────────────────────────────────────────────────────
-ROOT_URLCONF  = 'TravelTogether.urls'
-WSGI_APPLICATION = 'TravelTogether.wsgi.application'
 
-# ─── DATABASE ────────────────────────────────────────────────────────────────
-# expects DATABASE_URL=mysql://user:pass@host:port/name
-DATABASES = {
-    'default': env.db()
-}
+ROOT_URLCONF = 'TravelTogether.urls'
 
-# ─── TEMPLATES ───────────────────────────────────────────────────────────────
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],    # or [BASE_DIR / 'templates'] if you have a top-level templates dir
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,21 +47,26 @@ TEMPLATES = [
     },
 ]
 
-# ─── INTERNATIONALIZATION ────────────────────────────────────────────────────
+WSGI_APPLICATION = 'TravelTogether.wsgi.application'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'travel_db',
+        'USER': 'root',
+        'HOST': 'localhost',
+    }
+}
+
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE     = 'UTC'
-USE_I18N      = True
-USE_TZ        = True
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_TZ = True
 
-# ─── STATIC FILES (CSS, JS, IMAGES) ─────────────────────────────────────────
-STATIC_URL           = '/static/'
-STATIC_ROOT          = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS     = [ BASE_DIR / 'Travel_App' / 'static' ]
-STATICFILES_STORAGE  = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [ BASE_DIR / 'Travel_App' / 'static' ]
+STATIC_ROOT = BASE_DIR / 'assets'
 
-# ─── MEDIA UPLOADS ───────────────────────────────────────────────────────────
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# ─── DEFAULT PK FIELD TYPE ──────────────────────────────────────────────────
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
