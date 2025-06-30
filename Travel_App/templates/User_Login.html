@@ -1,4 +1,3 @@
-
 {% extends 'Base.html' %}
 {% load static %}
 
@@ -9,32 +8,130 @@
     {% endfor %}
   {% endif %}
 
-  <div class="hero-banner d-flex align-items-center justify-content-center">
-    <div class="box shadow-lg p-4 rounded">
-      <h3 class="text-center mb-3">User Login</h3>
-      <form method="POST" action="{% url 'User_Login' %}">
-        {% csrf_token %}
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <div class="input-group">
-            <span class="input-group-text material-symbols-outlined">person</span>
-            <input type="text" class="form-control" id="username" name="aname" required>
+  <!-- Hero Banner -->
+  <div class="hero-banner d-flex flex-column align-items-center justify-content-center">
+    <h1 class="text-white display-1 mb-3">Welcome</h1>
+    <p class="text-white fs-3 fst-italic text-center px-4">
+      "Strangers on a journey become friends for a lifetime."
+    </p>
+  </div>
+
+  <!-- Blog Section -->
+  <section class="blog container py-5">
+    <h2 class="text-center mb-5">Explore Destinations</h2>
+    <div class="row g-4">
+      <!-- Switzerland -->
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm">
+          <img src="{% static 'image/switzerland.jpg' %}" class="card-img-top" alt="Switzerland">
+          <div class="card-body">
+            <h5 class="card-title">Switzerland</h5>
+            <p class="card-text">Known for its stunning Alps, charming villages, and world-class chocolate, Switzerland offers breathtaking scenery and outdoor adventures.</p>
           </div>
         </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <div class="input-group">
-            <span class="input-group-text material-symbols-outlined">password</span>
-            <input type="password" class="form-control" id="password" name="apass" required>
+      </div>
+      <!-- Antarctica -->
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm">
+          <img src="{% static 'image/antartica.jpg' %}" class="card-img-top" alt="Antarctica">
+          <div class="card-body">
+            <h5 class="card-title">Antarctica</h5>
+            <p class="card-text">The southernmost continent, Antarctica captivates with its massive icebergs, unique wildlife, and untouched polar landscapes.</p>
           </div>
         </div>
-        <div class="d-grid">
-          <button class="btn btn-secondary" type="submit">Login</button>
+      </div>
+      <!-- Turkey -->
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm">
+          <img src="{% static 'image/turkey.jpg' %}" class="card-img-top" alt="Turkey">
+          <div class="card-body">
+            <h5 class="card-title">Turkey</h5>
+            <p class="card-text">Where East meets West, Turkey enchants with its rich history, vibrant bazaars, and the fairy-tale landscape of Cappadocia.</p>
+          </div>
         </div>
-        <div class="text-center mt-3">
-          <a class="btn btn-link" href="{% url 'Registration' %}">New User Registration</a>
+      </div>
+      <!-- Norway -->
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm">
+          <img src="{% static 'image/norway.jpg' %}" class="card-img-top" alt="Norway">
+          <div class="card-body">
+            <h5 class="card-title">Norway</h5>
+            <p class="card-text">Famous for its dramatic fjords, northern lights, and scenic coastal drives, Norway is a paradise for nature lovers.</p>
+          </div>
         </div>
-      </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact container py-5">
+    <h2 class="text-center mb-4">Get in Touch</h2>
+    <div class="row gx-5">
+      <!-- Contact Info -->
+      <div class="col-12 col-md-6 mb-4">
+        <div class="contact-card p-4 h-100 shadow-sm rounded">
+          <h5 class="mb-3">Contact Information</h5>
+          <ul class="list-unstyled contact-info mb-0">
+            <li><span class="material-symbols-outlined text-success">email</span> <a href="mailto:contact@traveltogether.com" class="text-dark">contact@traveltogether.com</a></li>
+            <li><span class="material-symbols-outlined text-success">phone</span> <a href="tel:+97112345678" class="text-dark">+971 1234 5678</a></li>
+            <li><span class="material-symbols-outlined text-success">location_on</span> Dubai, UAE</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Message Form -->
+      <div class="col-12 col-md-6">
+        <div class="contact-card p-4 h-100 shadow-sm rounded">
+          <h5 class="mb-3">Send Us a Message</h5>
+          <form action="#" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <input type="text" name="name" class="form-control rounded-pill" placeholder="Your Name" required>
+            </div>
+            <div class="mb-3">
+              <input type="email" name="email" class="form-control rounded-pill" placeholder="Your Email" required>
+            </div>
+            <div class="mb-3">
+              <textarea name="message" class="form-control rounded" rows="4" placeholder="Your Message" required></textarea>
+            </div>
+            <button class="btn btn-success rounded-pill px-4" type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Login Modal: triggered by navbar 'Login' dropdown -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">User Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="{% url 'User_Login' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="modalUsername" class="form-label">Username</label>
+              <div class="input-group">
+                <span class="input-group-text material-symbols-outlined">person</span>
+                <input type="text" class="form-control" id="modalUsername" name="aname" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="modalPassword" class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-text material-symbols-outlined">password</span>
+                <input type="password" class="form-control" id="modalPassword" name="apass" required>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Login</button>
+            <div class="text-center">
+              <a class="btn btn-link" href="{% url 'Registration' %}">New User Registration</a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -47,9 +144,17 @@
       width: 100%;
       height: 100vh;
     }
-    .box {
-      width: 320px;
-      background-color: rgba(255,255,255,0.85);
-    }
   </style>
+
+  <!-- Trigger modal when navbar login clicked -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginLink = document.querySelector('a.nav-link.dropdown-toggle');
+      if (loginLink) {
+        loginLink.setAttribute('data-bs-toggle', 'modal');
+        loginLink.setAttribute('data-bs-target', '#loginModal');
+        loginLink.removeAttribute('href');
+      }
+    });
+  </script>
 {% endblock %}
