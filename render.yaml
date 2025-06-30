@@ -1,10 +1,8 @@
 services:
   - type: web
-    name: django-web
+    name: travel-together
     env: python
     buildCommand: |
-  pip install -r requirements.txt
-  python manage.py collectstatic --noinput
-
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
     startCommand: gunicorn TravelTogether.wsgi:application
-    autoDeploy: true
